@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>for Keonho, always</title>
+<title>Hoping Us.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400;0,500;0,600;1,400&family=Beau+Rivage&family=Jost:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
@@ -697,7 +697,7 @@ And lastly, thank you for waiting for me to reach this point. Thank you for bein
       <span class="float-word fd3">my constant in chaos</span>
     </div>
     <div class="s6-love reveal d3">Love</div>
-    <div class="s6-footer reveal d4">Made with love for Keonho!</div>
+    <div class="s6-footer reveal d4">Made with love for you!</div>
 
     <a class="spotify-btn" id="spotifyBtn" href="https://open.spotify.com/playlist/7rrQA6cuS9AGxDeonPoOOU" target="_blank" rel="noopener noreferrer" aria-label="Open playlist on Spotify">
       Our Playlist ♡
@@ -745,9 +745,6 @@ const music = document.getElementById('bgMusic');
 const loading = document.getElementById('loading');
 const enterBtn = document.getElementById('enterBtn');
 
-let entered = sessionStorage.getItem('entered') === '1';
-
-
 function lockScroll(){
   document.documentElement.style.overflow = 'hidden';
   document.body.style.overflow = 'hidden';
@@ -761,54 +758,14 @@ function dismissLoading(){
   if(loading.classList.contains('hide')) return;
   loading.classList.add('hide');
   unlockScroll();
-  sessionStorage.setItem('entered','1');
-  entered = true;
-  
-  const firstSection = document.querySelector('section');
-  if(firstSection) firstSection.focus?.();
 }
 
-function tryAutoplayAndEnter(){
-  music.play().then(()=>{ dismissLoading(); }).catch(()=>{ /* autoplay blocked: keep loading until user gesture */ });
-}
+/* Halaman terkunci sampai tombol di-klik */
+lockScroll();
 
 enterBtn.addEventListener('click', ()=>{
   music.play().catch(()=>{});
   dismissLoading();
-});
-
-function onFirstUserGesture(){
-  if(entered) return;
-  music.play().catch(()=>{});
-  dismissLoading();
-  window.removeEventListener('keydown', onFirstUserGesture);
-  window.removeEventListener('touchstart', onFirstUserGesture);
-  window.removeEventListener('pointerdown', onFirstUserGesture);
-}
-window.addEventListener('keydown', onFirstUserGesture, { once: true });
-window.addEventListener('touchstart', onFirstUserGesture, { once: true });
-window.addEventListener('pointerdown', onFirstUserGesture, { once: true });
-
-if(!entered){
-  lockScroll();
-  tryAutoplayAndEnter();
-} else {
-  
-  loading.classList.add('hide');
-  try{ music.play().catch(()=>{}); }catch(e){}
-}
-
-
-window.addEventListener('keydown', (e)=>{
-  if(e.key === 'Escape'){
-    if(!loading.classList.contains('hide')){
-      
-      return;
-    } else {
-      loading.classList.remove('hide');
-      lockScroll();
-    }
-  }
 });
 </script>
 
